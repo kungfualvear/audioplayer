@@ -50,6 +50,7 @@ li .ib{width:44px;height:44px;display:grid;place-items:center;color:var(--mute);
 li .ib svg{width:20px;height:20px}
 .empty{padding:36px 24px;color:var(--mute);text-align:center}
 .empty b{display:block;color:var(--ink);margin-bottom:6px;font-size:1.05rem}
+.foot{flex:none;text-align:center;font-size:.75rem;color:var(--mute);padding:6px 16px 8px;border-top:1px solid var(--line)}
 .inst{display:flex;align-items:center;gap:8px;padding:6px 8px 6px 24px;background:var(--surface);border-top:1px solid var(--line);flex:none;font-size:.9rem}
 .inst[hidden]{display:none}
 .inst span{flex:1}
@@ -92,6 +93,7 @@ li .ib svg{width:20px;height:20px}
 </div>
 <input id="file" type="file" accept="audio/*" multiple hidden>
 <ul id="list"></ul>
+<footer class="foot">Danilo González ©</footer>
 
 <div id="sheet" hidden>
   <div class="back" id="back"></div>
@@ -293,7 +295,8 @@ $("#ibtn").onclick=function(){
 };
 $("#ix").onclick=function(){$("#inst").hidden=true;lsSet("instNo","1")};
 if("serviceWorker" in navigator&&/^https?:$/.test(location.protocol)){
-  try{navigator.serviceWorker.register("sw.js").then(function(){
+  try{navigator.serviceWorker.register("sw.js",{updateViaCache:"none"}).then(function(reg){
+    try{reg.update()}catch(e){}
     if(/iphone|ipad|ipod/i.test(navigator.userAgent))showInst("Instala la app para usarla sin conexión","Cómo");
   }).catch(function(){})}catch(e){}
 }
